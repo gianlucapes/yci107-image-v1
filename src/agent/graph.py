@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any, Dict, TypedDict
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 from langgraph.graph import StateGraph
 from langgraph.runtime import Runtime
