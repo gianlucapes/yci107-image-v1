@@ -7,10 +7,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any, Dict, TypedDict
-from langchain_google_genai import ChatGoogleGenerativeAI
 
 from langgraph.graph import StateGraph
 from langgraph.runtime import Runtime
+from src.agent.models.llm import Model
+from config import LargeLanguageModel
 
 
 class Context(TypedDict):
@@ -21,6 +22,7 @@ class Context(TypedDict):
     """
 
     my_configurable_param: str
+    model_name : str
 
 
 @dataclass
@@ -31,7 +33,8 @@ class State:
     See: https://langchain-ai.github.io/langgraph/concepts/low_level/#state
     """
 
-    changeme: str = "example"
+    text: str = "example"
+    output: str = ""
 
 
 async def call_model(state: State, runtime: Runtime[Context]) -> Dict[str, Any]:
@@ -39,9 +42,11 @@ async def call_model(state: State, runtime: Runtime[Context]) -> Dict[str, Any]:
 
     Can use runtime context to alter behavior.
     """
+    input_text = state.text
+    model=Model().get_model(LargeLanguageModel.GEMINI_FLASH_2_5)
+    state.output=model.invoke(input_text)
     return {
-        "changeme": "output from call_model. "
-        f"Configured with {runtime.context.get('my_configurable_param')}"
+        "output": state.output
     }
 
 

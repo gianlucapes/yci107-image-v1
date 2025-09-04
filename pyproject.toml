@@ -12,6 +12,7 @@ dependencies = [
     "langchain-google-genai>=2.1.10",
     "langgraph>=0.2.6",
     "pip>=25.2",
+    "pydantic-settings>=2.10.1",
     "python-dotenv>=1.0.1",
 ]
 
